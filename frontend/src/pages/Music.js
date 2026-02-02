@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { demoImages } from '../config/demoImages';
 
 const Music = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -96,8 +95,8 @@ const Music = () => {
   };
 
   const allTracks = [
-    ...albums.flatMap(album => album.tracks || []),
-    ...singles
+    ...(Array.isArray(albums) ? albums.flatMap(album => album.tracks || []) : []),
+    ...(Array.isArray(singles) ? singles : [])
   ];
 
   return (
@@ -372,10 +371,9 @@ const Music = () => {
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            padding: '0.5rem 0',
+                            padding: '0.5rem',
                             cursor: 'pointer',
                             borderRadius: '8px',
-                            padding: '0.5rem',
                             transition: 'background 0.3s ease',
                           }}
                           onMouseEnter={(e) => {

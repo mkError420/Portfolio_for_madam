@@ -1,8 +1,32 @@
 <?php
-header('Content-Type: application/json');
+// Remove all output buffering
+if (ob_get_level()) ob_end_clean();
+
+// Set CORS headers FIRST - before any other output
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Accept');
+header('Access-Control-Max-Age: 86400');
+header('Access-Control-Allow-Credentials: true');
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header('HTTP/1.1 200 OK');
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Accept');
+    header('Access-Control-Max-Age: 86400');
+    header('Content-Length: 0');
+    exit(0);
+}
+
+// Set content type
+header('Content-Type: application/json; charset=UTF-8');
+
+// Prevent caching
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
 
 require_once '../config/database.php';
 
@@ -29,10 +53,10 @@ try {
                     'created_at' => $album['created_at'],
                     'updated_at' => $album['updated_at'],
                     'cover' => "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=" . urlencode($album['title']),
-                    'tracks' => [] // You can expand this later
+                    'tracks' => []
                 ];
             }, $albums),
-            'singles' => array_filter(array_map(function($album) {
+            'singles' => array_values(array_filter(array_map(function($album) {
                 if ($album['type'] === 'single') {
                     return [
                         'id' => (int)$album['id'],
@@ -41,12 +65,12 @@ try {
                         'release_date' => $album['release_date'],
                         'genre' => $album['genre'],
                         'cover' => "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=" . urlencode($album['title']),
-                        'duration' => "3:30" // Default duration
+                        'duration' => "3:30"
                     ];
                 }
                 return null;
-            }, $albums)),
-            'albums_only' => array_filter(array_map(function($album) {
+            }, $albums))),
+            'albums_only' => array_values(array_filter(array_map(function($album) {
                 if ($album['type'] === 'album') {
                     return [
                         'id' => (int)$album['id'],
@@ -73,13 +97,16 @@ try {
                     ];
                 }
                 return null;
-            }, $albums))
+            }, $albums)))
         ]
     ];
     
-    echo json_encode($response, JSON_PRETTY_PRINT);
+    // Clean output and send JSON
+    echo json_encode($response, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     
 } catch (PDOException $e) {
+    // Error response with proper headers
+    header('Content-Type: application/json; charset=UTF-8');
     echo json_encode([
         'success' => false,
         'error' => 'Database error: ' . $e->getMessage()
