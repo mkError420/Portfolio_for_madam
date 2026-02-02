@@ -580,7 +580,7 @@ $stats = [
                 
                 <div class="nav-section">
                     <div class="nav-section-title">System</div>
-                    <a href="../index.php" class="nav-item" target="_blank">
+                    <a href="check_frontend.php" class="nav-item" target="_blank">
                         <i class="fas fa-external-link-alt"></i> View Site
                     </a>
                     <a href="logout.php" class="nav-item" style="color: #ff4757;">
@@ -595,7 +595,7 @@ $stats = [
             <div class="header">
                 <h1>Admin Hub</h1>
                 <div class="header-actions">
-                    <a href="../index.php" class="btn btn-secondary" target="_blank">
+                    <a href="check_frontend.php" class="btn btn-secondary" target="_blank">
                         <i class="fas fa-external-link-alt"></i> View Site
                     </a>
                     <a href="logout.php" class="btn btn-danger">
@@ -739,6 +739,7 @@ $stats = [
                             echo '</div>';
                             echo '</div>';
                         }
+                    }
                     
                     if (!empty($recent_messages)) {
                         foreach ($recent_messages as $message) {
