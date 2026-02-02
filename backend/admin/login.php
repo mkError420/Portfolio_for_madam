@@ -2,45 +2,41 @@
 session_start();
 require_once '../config/database.php';
 
-// Check if user is already logged in
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header('Location: index.php');
-    exit();
-}
-
-$database = new Database();
-$db = $database->getConnection();
-
-$error = '';
-
+// Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
     
-    // Query to check user credentials
-    $query = "SELECT id, username, password_hash FROM admin_users WHERE username = :username";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($user && password_verify($password, $user['password_hash'])) {
-        // Login successful
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_id'] = $user['id'];
-        $_SESSION['admin_username'] = $user['username'];
-        
-        // Update last login
-        $update_query = "UPDATE admin_users SET last_login = NOW() WHERE id = :id";
-        $update_stmt = $db->prepare($update_query);
-        $update_stmt->bindParam(':id', $user['id']);
-        $update_stmt->execute();
-        
-        header('Location: index.php');
-        exit();
+    if (empty($username) || empty($password)) {
+        $error = "Username and password are required";
     } else {
-        $error = 'Invalid username or password';
+        try {
+            $db = new Database();
+            $connection = $db->getConnection();
+            
+            $stmt = $connection->prepare("SELECT id, username, password FROM admin_users WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($user && password_verify($password, $user['password'])) {
+                // Login successful
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_id'] = $user['id'];
+                $_SESSION['admin_username'] = $user['username'];
+                $_SESSION['login_time'] = time();
+                
+                // Redirect to dashboard
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                $error = "Invalid username or password";
+                
+                // Add delay to prevent brute force attacks
+                sleep(1);
+            }
+        } catch (PDOException $e) {
+            $error = "Database error. Please try again.";
+        }
     }
 }
 ?>
@@ -51,153 +47,295 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Singer Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .login-container {
-            background: #2a2a2a;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 400px;
-            border: 1px solid #444;
         }
-        
+
         .login-header {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         .login-header h1 {
+            color: #333;
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
-        
+
         .login-header p {
-            color: #cccccc;
+            color: #666;
+            font-size: 0.9rem;
         }
-        
+
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
-        label {
+
+        .form-label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #cccccc;
+            color: #333;
             font-weight: 500;
         }
-        
-        input {
+
+        .form-input {
             width: 100%;
-            padding: 1rem;
-            background: #1a1a1a;
-            border: 1px solid #444;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            color: #ffffff;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
-        
-        input:focus {
+
+        .form-input:focus {
             outline: none;
-            border-color: #ff6b6b;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-        
+
+        .form-input-icon {
+            position: relative;
+        }
+
+        .form-input-icon i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .form-input-icon .form-input {
+            padding-left: 2.5rem;
+        }
+
         .btn {
             width: 100%;
-            background: #ff6b6b;
-            color: white;
+            padding: 0.75rem;
             border: none;
-            padding: 1rem;
             border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
-        
-        .btn:hover {
-            background: #ff5252;
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
         }
-        
-        .error {
-            background: #f44336;
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .alert {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 1.5rem;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
-        
-        .back-link {
+
+        .login-footer {
             text-align: center;
             margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
-        .back-link a {
-            color: #ff6b6b;
+
+        .login-footer a {
+            color: #667eea;
             text-decoration: none;
             font-size: 0.9rem;
         }
-        
-        .back-link a:hover {
+
+        .login-footer a:hover {
             text-decoration: underline;
         }
-        
-        .music-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+
+        .security-info {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .security-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .security-info ul {
+            margin-left: 1.5rem;
+        }
+
+        .security-info li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Loading state */
+        .btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-header">
-            <div class="music-icon">🎵</div>
-            <h1>Admin Login</h1>
-            <p>Singer Portfolio Management</p>
+            <h1><i class="fas fa-music"></i> Admin Login</h1>
+            <p>Singer Portfolio Management System</p>
         </div>
-        
-        <?php if ($error): ?>
-            <div class="error">
-                <?php echo $error; ?>
+
+        <?php if (isset($error)): ?>
+            <div class="alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>
-        
-        <form method="POST">
+
+        <form method="POST" id="loginForm">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required autofocus>
+                <label class="form-label" for="username">Username</label>
+                <div class="form-input-icon">
+                    <i class="fas fa-user"></i>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
             </div>
-            
+
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label class="form-label" for="password">Password</label>
+                <div class="form-input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
             </div>
-            
-            <button type="submit" class="btn">Login</button>
+
+            <button type="submit" class="btn btn-primary" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Sign In</span>
+            </button>
         </form>
-        
-        <div class="back-link">
-            <a href="../">← Back to Website</a>
+
+        <div class="security-info">
+            <h4>Security Notice:</h4>
+            <ul>
+                <li>Use a strong, unique password</li>
+                <li>This is a secure admin area</li>
+                <li>Failed login attempts are logged</li>
+            </ul>
+        </div>
+
+        <div class="login-footer">
+            <a href="../index.php" target="_blank">
+                <i class="fas fa-external-link-alt"></i> View Website
+            </a>
         </div>
     </div>
+
+    <script>
+        // Add loading state to form submission
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const btn = document.getElementById('loginBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+        });
+
+        // Focus on username field when page loads
+        document.getElementById('username').focus();
+
+        // Clear error message when user starts typing
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
