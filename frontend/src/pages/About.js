@@ -1,370 +1,796 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { demoImages } from '../config/demoImages';
+import ButtonStyles from '../styles/ButtonStyles';
 
 const About = () => {
-  const timeline = [
-    {
-      year: '2015',
-      title: 'Musical Journey Begins',
-      description: 'Started formal vocal training and discovered my passion for soulful melodies.',
-      type: 'milestone'
-    },
-    {
-      year: '2017',
-      title: 'First Live Performance',
-      description: 'Performed at local venues and gained recognition for unique vocal style.',
-      type: 'performance'
-    },
-    {
-      year: '2019',
-      title: 'Debut Single Release',
-      description: 'Released first single "Whispers of the Soul" which received critical acclaim.',
-      type: 'release'
-    },
-    {
-      year: '2020',
-      title: 'First Album',
-      description: 'Launched debut album "Echoes of Emotion" featuring 12 original tracks.',
-      type: 'album'
-    },
-    {
-      year: '2022',
-      title: 'International Tour',
-      description: 'Embarked on first international tour, performing in 15 countries.',
-      type: 'tour'
-    },
-    {
-      year: '2024',
-      title: 'Latest Achievement',
-      description: 'Received prestigious music award and collaborated with renowned artists.',
-      type: 'award'
-    }
-  ];
-
-  const skills = [
-    { name: 'Vocal Performance', level: 95 },
-    { name: 'Songwriting', level: 85 },
-    { name: 'Music Production', level: 75 },
-    { name: 'Live Performance', level: 90 },
-    { name: 'Music Theory', level: 80 }
-  ];
-
   return (
-    <div className="about">
-      {/* Hero Section */}
-      <section className="about-hero" style={{
-        padding: '8rem 0 4rem',
-        background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '3rem',
-              alignItems: 'center',
-            }}
-          >
-            <div>
+    <>
+      <style jsx>{`
+        ${ButtonStyles}
+        
+        /* Base Styles */
+        .about {
+          min-height: 100vh;
+        }
+        
+        /* Enhanced Responsive Design */
+        
+        /* Hero Section */
+        @media (max-width: 1024px) {
+          .hero-title {
+            font-size: 4rem !important;
+          }
+          
+          .avatar-circle {
+            width: 200px !important;
+            height: 200px !important;
+          }
+          
+          .hero-subtitle {
+            font-size: 1.1rem !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .hero-title {
+            font-size: 3rem !important;
+          }
+          
+          .avatar-circle {
+            width: 180px !important;
+            height: 180px !important;
+          }
+          
+          .hero-subtitle {
+            font-size: 1rem !important;
+          }
+        }
+        
+        /* Story Section */
+        @media (max-width: 1024px) {
+          .story-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+          
+          .story-image {
+            height: 300px !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .story-grid {
+            grid-template-columns: 1fr !important;
+          }
+          
+          .story-image {
+            height: 250px !important;
+            margin-top: 2rem !important;
+          }
+        }
+        
+        /* Philosophy Section */
+        @media (max-width: 1024px) {
+          .philosophy-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+            gap: 2rem !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .philosophy-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+          }
+        }
+        
+        /* Journey Section */
+        @media (max-width: 1024px) {
+          .journey-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+            gap: 2rem !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .journey-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+          }
+          
+          .journey-card {
+            padding: 2rem !important;
+          }
+        }
+        
+        /* CTA Section */
+        @media (max-width: 1024px) {
+          .cta-title {
+            font-size: 2.5rem !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .cta-title {
+            font-size: 2rem !important;
+          }
+          
+          .cta-button {
+            width: 100% !important;
+            max-width: 300px !important;
+          }
+        }
+      `}</style>
+
+      <div className="about">
+        {/* Hero Section with Black Background */}
+        <section className="about-hero" style={{
+          position: 'relative',
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #141414 50%, #1a1a1a 75%, #0f0f0f 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}>
+          {/* Animated Background Elements */}
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+          }}>
+            {/* Dark floating elements */}
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                style={{
+                  position: 'absolute',
+                  width: Math.random() * 80 + 40 + 'px',
+                  height: Math.random() * 80 + 40 + 'px',
+                  background: `rgba(255, 255, 255, ${Math.random() * 0.02 + 0.01})`,
+                  borderRadius: '50%',
+                  left: Math.random() * 100 + '%',
+                  top: Math.random() * 100 + '%',
+                  filter: 'blur(1px)',
+                }}
+                animate={{
+                  x: [0, Math.random() * 100 - 50],
+                  y: [0, Math.random() * 100 - 50],
+                  scale: [1, Math.random() * 0.3 + 0.8, 1],
+                  opacity: [0.1, 0.3, 0.1],
+                }}
+                transition={{
+                  duration: Math.random() * 15 + 10,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+            
+            {/* Subtle gradient overlays */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '50%',
+              background: 'linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%)',
+            }} />
+            
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '50%',
+              background: 'linear-gradient(0deg, rgba(118, 75, 162, 0.05) 0%, transparent 100%)',
+            }} />
+          </div>
+
+          <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2 }}
+              style={{ textAlign: 'center' }}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="avatar-circle"
+                style={{
+                  width: '250px',
+                  height: '250px',
+                  margin: '0 auto 2rem',
+                  background: 'linear-gradient(45deg, #1a1a1a, #2a2a2a, #1a1a1a)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.8), 0 0 100px rgba(102, 126, 234, 0.1)',
+                  position: 'relative',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                }}
+              >
+                <div style={{
+                  width: '90%',
+                  height: '90%',
+                  background: 'linear-gradient(135deg, #0f0f0f, #1a1a1a)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '4rem',
+                  background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: 'bold',
+                  boxShadow: 'inset 0 0 30px rgba(0,0,0,0.5)',
+                }}>
+                  A
+                </div>
+                
+                {/* Subtle ring animation */}
+                <motion.div
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    border: '1px solid transparent',
+                    borderTopColor: 'rgba(102, 126, 234, 0.3)',
+                    borderRightColor: 'rgba(118, 75, 162, 0.3)',
+                  }}
+                />
+              </motion.div>
+              
               <motion.h1
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="hero-title"
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-                  color: 'var(--text-primary)',
-                  marginBottom: '1.5rem',
+                  fontSize: 'clamp(3rem, 8vw, 6rem)',
+                  color: 'white',
+                  marginBottom: '1rem',
+                  textShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                  letterSpacing: '-2px',
                 }}
               >
                 About Me
               </motion.h1>
+              
               <motion.p
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.7 }}
+                className="hero-subtitle"
                 style={{
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                  color: 'var(--text-secondary)',
-                  marginBottom: '1.5rem',
+                  fontSize: '1.3rem',
+                  color: 'rgba(255,255,255,0.9)',
+                  maxWidth: '600px',
+                  margin: '0 auto',
+                  lineHeight: 1.6,
+                  textShadow: '0 5px 15px rgba(0,0,0,0.3)',
                 }}
               >
-                Music has been my lifelong passion and my medium for expressing the deepest emotions of the human experience. 
-                From intimate acoustic sessions to grand stadium performances, every note I sing comes from the heart.
+                Musician • Artist • Storyteller
               </motion.p>
-              <motion.p
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                style={{
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                  color: 'var(--text-secondary)',
-                }}
-              >
-                My journey in music has been one of constant growth, learning, and discovery. 
-                I believe in the power of melody to heal, inspire, and connect people across all boundaries.
-              </motion.p>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              style={{ textAlign: 'center' }}
-            >
-              <img
-                src={demoImages.artist}
-                alt="Artist"
-                style={{
-                  width: '100%',
-                  maxWidth: '400px',
-                  borderRadius: '20px',
-                  boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4)',
-                  border: '3px solid var(--accent-color)',
-                }}
-              />
             </motion.div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
 
-      {/* Timeline Section */}
-      <section className="timeline" style={{
-        padding: '5rem 0',
-        background: 'var(--primary-color)',
-      }}>
-        <div className="container">
+          {/* Scroll Indicator */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
-          >
-            <h2 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
-              My Musical Journey
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-              Key moments that shaped my career
-            </p>
-          </motion.div>
-
-          <div style={{ position: 'relative' }}>
-            {/* Timeline Line */}
-            <div style={{
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            style={{
               position: 'absolute',
+              bottom: '30px',
               left: '50%',
-              top: 0,
-              bottom: 0,
-              width: '2px',
-              background: 'var(--accent-color)',
               transform: 'translateX(-50%)',
-            }} />
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: '2rem',
+              textShadow: '0 0 20px rgba(102, 126, 234, 0.5)',
+            }}
+          >
+            ↓
+          </motion.div>
+        </section>
 
-            {timeline.map((item, index) => (
+        {/* Story Section */}
+        <section className="story-section" style={{
+          padding: '6rem 0',
+          background: 'linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 50%, #252525 100%)',
+          position: 'relative',
+        }}>
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="story-grid"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '4rem',
+                alignItems: 'center',
+              }}
+            >
+              <div>
+                <motion.h2
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: '3rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '2rem',
+                    position: 'relative',
+                  }}
+                >
+                  My Story
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: '100px' }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    style={{
+                      height: '4px',
+                      background: 'linear-gradient(90deg, #667eea, #764ba2)',
+                      marginTop: '1rem',
+                    }}
+                  />
+                </motion.h2>
+                
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  style={{
+                    fontSize: '1.1rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.8,
+                    marginBottom: '1.5rem',
+                  }}
+                >
+                  From humble beginnings in a small town to international stages, my journey has been defined by passion, perseverance, and the universal language of music. Every note I play carries the stories of my experiences, the dreams that fueled my journey, and the connections I've made with audiences around the world.
+                </motion.p>
+                
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  style={{
+                    fontSize: '1.1rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.8,
+                  }}
+                >
+                  Music isn't just what I do—it's who I am. It's the voice I found when words weren't enough, the comfort I discovered in melodies, and the bridge I built to connect hearts across cultures and continents.
+                </motion.p>
+              </div>
+              
               <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
                 viewport={{ once: true }}
                 style={{
-                  display: 'flex',
-                  justifyContent: index % 2 === 0 ? 'flex-end' : 'flex-start',
-                  marginBottom: '3rem',
                   position: 'relative',
                 }}
               >
                 <div style={{
-                  width: '45%',
-                  padding: index % 2 === 0 ? '0 2rem 0 0' : '0 0 0 2rem',
-                  textAlign: index % 2 === 0 ? 'right' : 'left',
-                }}>
-                  <div className="card" style={{
-                    background: 'var(--card-bg)',
-                    border: '1px solid var(--border-color)',
-                    borderRadius: '15px',
-                    padding: '2rem',
-                    position: 'relative',
+                  width: '100%',
+                  height: '400px',
+                  background: 'linear-gradient(135deg, #667eea, #764ba2, #f093fb)',
+                  borderRadius: '20px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 30px 60px rgba(0,0,0,0.3)',
+                }}
+                className="story-image"
+              >
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'url("https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=600&fit=crop") center/cover',
+                    opacity: 0.3,
+                  }} />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '6rem',
+                    color: 'white',
+                    opacity: 0.8,
                   }}>
+                    🎵
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Philosophy Section */}
+        <section className="philosophy-section" style={{
+          padding: '6rem 0',
+          background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%)',
+          position: 'relative',
+        }}>
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              style={{ textAlign: 'center', marginBottom: '4rem' }}
+            >
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '3rem',
+                color: 'var(--text-primary)',
+                marginBottom: '1rem',
+              }}>
+                Musical Philosophy
+              </h2>
+              <p style={{
+                fontSize: '1.2rem',
+                color: 'var(--text-secondary)',
+                maxWidth: '600px',
+                margin: '0 auto',
+              }}>
+                The principles that guide every note I compose and every performance I give
+              </p>
+            </motion.div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '3rem',
+            }}
+              className="philosophy-grid"
+            >
+              {[
+                {
+                  icon: '🎭',
+                  title: 'Authenticity',
+                  description: 'Every performance is a genuine expression of emotion and experience, never just a technical exercise.'
+                },
+                {
+                  icon: '🌍',
+                  title: 'Connection',
+                  description: 'Music is the universal language that transcends barriers and brings people together in shared experience.'
+                },
+                {
+                  icon: '✨',
+                  title: 'Innovation',
+                  description: 'Pushing boundaries while honoring traditions, creating something uniquely mine yet universally relatable.'
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))',
+                    padding: '2.5rem',
+                    borderRadius: '20px',
+                    textAlign: 'center',
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  <div style={{
+                    fontSize: '3rem',
+                    marginBottom: '1rem',
+                  }}>
+                    {item.icon}
+                  </div>
+                  <h3 style={{
+                    fontSize: '1.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '1rem',
+                  }}>
+                    {item.title}
+                  </h3>
+                  <p style={{
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.6,
+                  }}>
+                    {item.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Musical Journey Section */}
+        <section className="journey-section" style={{
+          padding: '8rem 0',
+          background: 'linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Background Pattern */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.1) 0%, transparent 50%)`,
+          }} />
+
+          <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              style={{ textAlign: 'center', marginBottom: '5rem' }}
+            >
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '3.5rem',
+                color: 'var(--text-primary)',
+                marginBottom: '1rem',
+                background: 'linear-gradient(135deg, #667eea, #764ba2, #f093fb)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
+                Musical Journey
+              </h2>
+              <p style={{
+                fontSize: '1.2rem',
+                color: 'var(--text-secondary)',
+                maxWidth: '600px',
+                margin: '0 auto',
+              }}>
+                The path that shaped my musical identity
+              </p>
+            </motion.div>
+
+            {/* Unique Journey Cards Layout */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '2rem',
+              position: 'relative',
+            }}
+              className="journey-grid"
+            >
+              {[
+                {
+                  year: '2015',
+                  title: 'The Beginning',
+                  description: 'First guitar lesson and the discovery of a lifelong passion for music.',
+                  icon: '🎸',
+                  color: '#667eea',
+                  delay: 0
+                },
+                {
+                  year: '2018',
+                  title: 'First Performance',
+                  description: 'Debut at local venue, received standing ovation and knew this was my calling.',
+                  icon: '🎤',
+                  color: '#764ba2',
+                  delay: 0.2
+                },
+                {
+                  year: '2020',
+                  title: 'Breakthrough Album',
+                  description: 'Released first studio album, topped indie charts and reached global audience.',
+                  icon: '💿',
+                  color: '#f093fb',
+                  delay: 0.4
+                },
+                {
+                  year: '2023',
+                  title: 'World Tour',
+                  description: 'Performed in 15 countries, connected with diverse audiences worldwide.',
+                  icon: '🌍',
+                  color: '#4facfe',
+                  delay: 0.6
+                }
+              ].map((milestone, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 100, rotateX: -15 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: milestone.delay,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  viewport={{ once: true }}
+                  style={{
+                    perspective: '1000px',
+                  }}
+                >
+                  <motion.div
+                    whileHover={{ 
+                      y: -10, 
+                      rotateX: 5,
+                      boxShadow: '0 30px 60px rgba(102, 126, 234, 0.3)'
+                    }}
+                    className="journey-card"
+                    style={{
+                      background: `linear-gradient(135deg, rgba(${milestone.color === '#667eea' ? '102, 126, 234' : milestone.color === '#764ba2' ? '118, 75, 162' : milestone.color === '#f093fb' ? '240, 147, 251' : '79, 172, 254'}, 0.1), rgba(0, 0, 0, 0.8))`,
+                      padding: '2.5rem',
+                      borderRadius: '20px',
+                      border: `2px solid ${milestone.color}20`,
+                      position: 'relative',
+                      overflow: 'hidden',
+                      transformStyle: 'preserve-3d',
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    {/* Glow Effect */}
                     <div style={{
                       position: 'absolute',
-                      top: '50%',
-                      [index % 2 === 0 ? 'right' : 'left']: '-10px',
-                      transform: 'translateY(-50%)',
-                      width: '0',
-                      height: '0',
-                      borderTop: '10px solid transparent',
-                      borderBottom: '10px solid transparent',
-                      [index % 2 === 0 ? 'borderLeft' : 'borderRight']: '10px solid var(--card-bg)',
+                      top: '-50%',
+                      left: '-50%',
+                      width: '200%',
+                      height: '200%',
+                      background: `radial-gradient(circle, ${milestone.color}40 0%, transparent 70%)`,
+                      opacity: 0.5,
                     }} />
-                    <span style={{
-                      color: 'var(--accent-color)',
-                      fontSize: '0.9rem',
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px',
-                    }}>
-                      {item.year}
-                    </span>
-                    <h3 style={{
-                      color: 'var(--text-primary)',
-                      margin: '0.5rem 0',
-                      fontSize: '1.3rem',
-                    }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
 
-                {/* Timeline Dot */}
-                <div style={{
-                  position: 'absolute',
-                  left: '50%',
-                  top: '2rem',
-                  transform: 'translateX(-50%)',
-                  width: '20px',
-                  height: '20px',
-                  background: 'var(--accent-color)',
-                  borderRadius: '50%',
-                  border: '4px solid var(--primary-color)',
-                  zIndex: 1,
-                }} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section className="skills" style={{
-        padding: '5rem 0',
-        background: 'var(--secondary-color)',
-      }}>
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '3rem' }}
-          >
-            <h2 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
-              Musical Skills & Expertise
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-              Years of dedication to musical excellence
-            </p>
-          </motion.div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem',
-          }}>
-            {skills.map((skill, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card"
-              >
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '0.5rem',
-                  }}>
-                    <h4 style={{ color: 'var(--text-primary)', margin: 0 }}>
-                      {skill.name}
-                    </h4>
-                    <span style={{ color: 'var(--accent-color)', fontWeight: 600 }}>
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div style={{
-                    width: '100%',
-                    height: '8px',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '4px',
-                    overflow: 'hidden',
-                  }}>
+                    {/* Year Badge */}
                     <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1, delay: index * 0.1 }}
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ duration: 0.5, delay: milestone.delay + 0.2 }}
                       viewport={{ once: true }}
                       style={{
-                        height: '100%',
-                        background: 'var(--gradient-primary)',
-                        borderRadius: '4px',
+                        position: 'absolute',
+                        top: '-15px',
+                        right: '-15px',
+                        background: `linear-gradient(135deg, ${milestone.color}, ${milestone.color}80)`,
+                        color: 'white',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        fontSize: '0.9rem',
+                        fontWeight: 'bold',
+                        boxShadow: `0 10px 20px ${milestone.color}40`,
                       }}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                    >
+                      {milestone.year}
+                    </motion.div>
 
-      {/* Personal Message */}
-      <section className="personal-message" style={{
-        padding: '5rem 0',
-        background: 'var(--primary-color)',
-      }}>
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="card"
-            style={{
-              textAlign: 'center',
-              padding: '3rem',
-              maxWidth: '800px',
-              margin: '0 auto',
-            }}
-          >
-            <h2 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
-              A Message to My Fans
-            </h2>
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: 1.8,
-              color: 'var(--text-secondary)',
-              marginBottom: '1.5rem',
-            }}>
-              Thank you for being part of this incredible journey. Your support and love for music 
-              inspire me to keep creating and sharing my art with the world. Every song I write 
-              and every performance I give is dedicated to you - the listeners who make this all possible.
-            </p>
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: 1.8,
-              color: 'var(--text-secondary)',
-            }}>
-              Music is a universal language that connects us all, and I'm honored to be your vessel 
-              for these melodies and emotions. Let's continue to share the beauty of music together.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+                    {/* Icon */}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      transition={{ duration: 0.8, delay: milestone.delay + 0.3, type: "spring" }}
+                      viewport={{ once: true }}
+                      style={{
+                        fontSize: '3rem',
+                        marginBottom: '1.5rem',
+                        filter: `drop-shadow(0 10px 20px ${milestone.color}40)`,
+                      }}
+                    >
+                      {milestone.icon}
+                    </motion.div>
+
+                    {/* Content */}
+                    <div style={{ position: 'relative', zIndex: 2 }}>
+                      <h3 style={{
+                        fontSize: '1.5rem',
+                        color: 'var(--text-primary)',
+                        marginBottom: '1rem',
+                        background: `linear-gradient(135deg, ${milestone.color}, ${milestone.color}80)`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}>
+                        {milestone.title}
+                      </h3>
+                      <p style={{
+                        color: 'var(--text-secondary)',
+                        lineHeight: 1.6,
+                        fontSize: '0.95rem',
+                      }}>
+                        {milestone.description}
+                      </p>
+                    </div>
+
+                    {/* Decorative Elements */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      left: '10px',
+                      right: '10px',
+                      height: '2px',
+                      background: `linear-gradient(90deg, transparent, ${milestone.color}, transparent)`,
+                      opacity: 0.5,
+                    }} />
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="cta-section" style={{
+          padding: '6rem 0',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Background Pattern */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+
+          <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+            >
+              <h2 
+                className="cta-title"
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '3.5rem',
+                  color: 'white',
+                  marginBottom: '1.5rem',
+                  textShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                }}
+              >
+                Let's Create Something Beautiful Together
+              </h2>
+              <p style={{
+                fontSize: '1.2rem',
+                color: 'rgba(255,255,255,0.9)',
+                maxWidth: '600px',
+                margin: '0 auto 3rem',
+                lineHeight: 1.6,
+              }}>
+                Whether it's a collaboration, performance opportunity, or just a hello - I'd love to hear from you.
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn btn-primary btn-lg"
+                onClick={() => window.location.href = '/contact'}
+              >
+                Get In Touch
+              </motion.button>
+            </motion.div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 

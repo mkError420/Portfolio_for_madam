@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { demoImages } from '../config/demoImages';
 
 const Music = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -96,8 +95,8 @@ const Music = () => {
   };
 
   const allTracks = [
-    ...albums.flatMap(album => album.tracks),
-    ...singles
+    ...(Array.isArray(albums) ? albums.flatMap(album => album.tracks || []) : []),
+    ...(Array.isArray(singles) ? singles : [])
   ];
 
   return (
@@ -331,102 +330,103 @@ const Music = () => {
               gap: '2rem',
             }}>
               {albums.map((album, index) => (
-              <motion.div
-                key={album.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card"
-              >
-                <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                  <img
-                    src={album.cover}
-                    alt={album.title}
-                    style={{
-                      width: '120px',
-                      height: '120px',
-                      borderRadius: '10px',
-                      objectFit: 'cover',
-                    }}
-                  />
-                  <div>
-                    <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem' }}>
-                      {album.title}
-                    </h3>
-                    <p style={{ color: 'var(--text-secondary)', margin: '0 0 0.5rem' }}>
-                      {album.year} • {album.tracks.length} tracks
-                    </p>
-                    <button className="btn btn-primary" style={{ fontSize: '0.9rem' }}>
-                      Play Album
-                    </button>
-                  </div>
-                </div>
-
-                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
-                  {album.tracks.map((track, trackIndex) => (
-                    <div
-                      key={track.id}
+                <motion.div
+                  key={album.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card"
+                >
+                  <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                    <img
+                      src={album.cover}
+                      alt={album.title}
                       style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '0.5rem 0',
-                        cursor: 'pointer',
-                        borderRadius: '8px',
-                        padding: '0.5rem',
-                        transition: 'background 0.3s ease',
+                        width: '120px',
+                        height: '120px',
+                        borderRadius: '10px',
+                        objectFit: 'cover',
                       }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'transparent';
-                      }}
-                      onClick={() => playTrack(track)}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                          {trackIndex + 1}
-                        </span>
-                        <div>
-                          <p style={{ 
-                            color: currentTrack?.id === track.id ? 'var(--accent-color)' : 'var(--text-primary)', 
-                            margin: 0,
-                            fontSize: '0.95rem'
-                          }}>
-                            {track.title}
-                          </p>
-                          <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.85rem' }}>
-                            {track.artist}
-                          </p>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                          {track.duration}
-                        </span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            playTrack(track);
-                          }}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: currentTrack?.id === track.id && isPlaying ? 'var(--accent-color)' : 'var(--text-secondary)',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          {currentTrack?.id === track.id && isPlaying ? '⏸' : '▶'}
-                        </button>
-                      </div>
+                    />
+                    <div>
+                      <h3 style={{ color: 'var(--text-primary)', margin: '0 0 0.5rem' }}>
+                        {album.title}
+                      </h3>
+                      <p style={{ color: 'var(--text-secondary)', margin: '0 0 0.5rem' }}>
+                        {album.year} • {album.tracks ? album.tracks.length : 0} tracks
+                      </p>
+                      <button className="btn btn-primary" style={{ fontSize: '0.9rem' }}>
+                        Play Album
+                      </button>
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  </div>
+
+                  {album.tracks && (
+                    <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+                      {album.tracks.map((track, trackIndex) => (
+                        <div
+                          key={track.id}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '0.5rem',
+                            cursor: 'pointer',
+                            borderRadius: '8px',
+                            transition: 'background 0.3s ease',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent';
+                          }}
+                          onClick={() => playTrack(track)}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                              {trackIndex + 1}
+                            </span>
+                            <div>
+                              <p style={{ 
+                                color: currentTrack?.id === track.id ? 'var(--accent-color)' : 'var(--text-primary)', 
+                                margin: 0,
+                                fontSize: '0.95rem'
+                              }}>
+                                {track.title}
+                              </p>
+                              <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.85rem' }}>
+                                {track.artist}
+                              </p>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                              {track.duration}
+                            </span>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                playTrack(track);
+                              }}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: currentTrack?.id === track.id && isPlaying ? 'var(--accent-color)' : 'var(--text-secondary)',
+                                fontSize: '1rem',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {currentTrack?.id === track.id && isPlaying ? '⏸' : '▶'}
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))}
             </div>
           )}
         </div>
@@ -472,39 +472,39 @@ const Music = () => {
               </div>
             ) : (
               singles.map((single, index) => (
-              <motion.div
-                key={single.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card"
-                style={{ textAlign: 'center' }}
-              >
-                <img
-                  src={single.cover}
-                  alt={single.title}
-                  style={{
-                    width: '100%',
-                    borderRadius: '10px',
-                    marginBottom: '1rem',
-                  }}
-                />
-                <h3 style={{ color: 'var(--text-primary)', margin: '0.5rem 0' }}>
-                  {single.title}
-                </h3>
-                <p style={{ color: 'var(--text-secondary)', margin: '0.5rem 0', fontSize: '0.9rem' }}>
-                  {single.releaseDate} • {single.duration}
-                </p>
-                <button
-                  onClick={() => playTrack(single)}
-                  className="btn btn-primary"
-                  style={{ width: '100%' }}
+                <motion.div
+                  key={single.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card"
+                  style={{ textAlign: 'center' }}
                 >
-                  {currentTrack?.id === single.id && isPlaying ? '⏸ Playing' : '▶ Play'}
-                </button>
-              </motion.div>
-            ))}
+                  <img
+                    src={single.cover}
+                    alt={single.title}
+                    style={{
+                      width: '100%',
+                      borderRadius: '10px',
+                      marginBottom: '1rem',
+                    }}
+                  />
+                  <h3 style={{ color: 'var(--text-primary)', margin: '0.5rem 0' }}>
+                    {single.title}
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', margin: '0.5rem 0', fontSize: '0.9rem' }}>
+                    {single.releaseDate} • {single.duration}
+                  </p>
+                  <button
+                    onClick={() => playTrack(single)}
+                    className="btn btn-primary"
+                    style={{ width: '100%' }}
+                  >
+                    {currentTrack?.id === single.id && isPlaying ? '⏸ Playing' : '▶ Play'}
+                  </button>
+                </motion.div>
+              ))
             )}
           </div>
         </div>

@@ -65,8 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $target_path = $upload_dir . $file_name;
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                    $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_path) VALUES (?, ?, ?)");
-                    $stmt->execute([$title, $category, $file_name]);
+                    $image_url = '../uploads/gallery/' . $file_name;
+                    $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (?, ?, ?)");
+                    $stmt->execute([$title, $category, $image_url]);
                     $_SESSION['success'] = 'Gallery image added successfully!';
                 } else {
                     $_SESSION['error'] = 'Failed to upload image';
