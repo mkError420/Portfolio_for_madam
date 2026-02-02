@@ -1,6 +1,6 @@
 <?php
-require_once '../../../config/database.php';
-require_once '../../../config/cors.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/cors.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -58,8 +58,10 @@ function get_videos_data($db) {
             'behind_scenes' => array()
         );
 
-        foreach ($videos as $video) {
-            $video['thumbnail'] = $video['thumbnail'] ?: 'https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Video';
+        foreach ($videos as &$video) {
+            $video['thumbnail'] = !empty($video['thumbnail']) 
+                ? get_full_image_url($video['thumbnail']) 
+                : 'https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Video';
             
             switch($video['category']) {
                 case 'music_video':
@@ -90,5 +92,21 @@ function get_videos_data($db) {
             "message" => "Database error: " . $exception->getMessage()
         ));
     }
+}
+
+function get_full_image_url($path) {
+    if (empty($path)) return null;
+    if (strpos($path, 'http') === 0) return $path;
+    
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'];
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $api_pos = strpos($script_name, '/api/');
+    
+    // Determine backend root based on script location
+    $root = ($api_pos !== false) ? substr($script_name, 0, $api_pos) : dirname($script_name);
+    $root = rtrim($root, '/\\');
+    
+    return $protocol . "://" . $host . $root . '/admin/' . ltrim($path, '/');
 }
 ?>
