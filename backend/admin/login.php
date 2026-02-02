@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_username'] = $user['username'];
                 $_SESSION['login_time'] = time();
                 
-                // Redirect to dashboard
-                header('Location: dashboard.php');
+                // Redirect to admin index (main admin hub)
+                header('Location: index.php');
                 exit();
             } else {
                 $error = "Invalid username or password";
