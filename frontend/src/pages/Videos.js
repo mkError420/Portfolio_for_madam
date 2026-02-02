@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { demoImages } from '../config/demoImages';
 
 const Videos = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -9,7 +10,7 @@ const Videos = () => {
       id: 1,
       title: "Whispers of the Soul",
       description: "Official music video from the latest album",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Music+Video+1",
+      thumbnail: demoImages.videos.music1,
       videoId: "dQw4w9WgXcQ", // YouTube video ID
       duration: "3:45",
       views: "1.2M",
@@ -19,7 +20,7 @@ const Videos = () => {
       id: 2,
       title: "Midnight Melodies",
       description: "A soulful journey through the night",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Music+Video+2",
+      thumbnail: demoImages.videos.music2,
       videoId: "dQw4w9WgXcQ",
       duration: "4:12",
       views: "856K",
@@ -29,7 +30,7 @@ const Videos = () => {
       id: 3,
       title: "Dancing in the Rain",
       description: "An uplifting celebration of life",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Music+Video+3",
+      thumbnail: demoImages.videos.music3,
       videoId: "dQw4w9WgXcQ",
       duration: "3:28",
       views: "2.1M",
@@ -42,7 +43,7 @@ const Videos = () => {
       id: 4,
       title: "Live at Madison Square Garden",
       description: "Full concert performance from the world tour",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Live+Performance+1",
+      thumbnail: demoImages.videos.live1,
       videoId: "dQw4w9WgXcQ",
       duration: "1:45:00",
       views: "3.5M",
@@ -53,7 +54,7 @@ const Videos = () => {
       id: 5,
       title: "Acoustic Session",
       description: "Intimate acoustic performance",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Live+Performance+2",
+      thumbnail: demoImages.videos.live2,
       videoId: "dQw4w9WgXcQ",
       duration: "45:30",
       views: "567K",
@@ -64,7 +65,7 @@ const Videos = () => {
       id: 6,
       title: "Festival Performance",
       description: "Electric performance at Summer Music Festival",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Live+Performance+3",
+      thumbnail: demoImages.videos.live3,
       videoId: "dQw4w9WgXcQ",
       duration: "1:20:00",
       views: "1.8M",
@@ -78,7 +79,7 @@ const Videos = () => {
       id: 7,
       title: "Making of the Album",
       description: "Behind the scenes of the recording process",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Behind+Scenes+1",
+      thumbnail: demoImages.videos.behind1,
       videoId: "dQw4w9WgXcQ",
       duration: "12:45",
       views: "234K",
@@ -88,7 +89,7 @@ const Videos = () => {
       id: 8,
       title: "Music Video Shoot",
       description: "The making of 'Whispers of the Soul' video",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Behind+Scenes+2",
+      thumbnail: demoImages.videos.behind2,
       videoId: "dQw4w9WgXcQ",
       duration: "8:30",
       views: "189K",
@@ -98,7 +99,7 @@ const Videos = () => {
       id: 9,
       title: "Tour Diary",
       description: "Life on the road during the world tour",
-      thumbnail: "https://via.placeholder.com/640x360/2a2a2a/ffffff?text=Behind+Scenes+3",
+      thumbnail: demoImages.videos.behind3,
       videoId: "dQw4w9WgXcQ",
       duration: "15:20",
       views: "445K",

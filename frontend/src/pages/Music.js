@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { demoImages } from '../config/demoImages';
 
 const Music = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -14,7 +15,7 @@ const Music = () => {
       id: 1,
       title: "Echoes of Emotion",
       year: "2024",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Album+1",
+      cover: demoImages.albums[1],
       tracks: [
         { id: 1, title: "Whispers of the Soul", duration: "3:45", artist: "Artist Name" },
         { id: 2, title: "Midnight Melodies", duration: "4:12", artist: "Artist Name" },
@@ -27,7 +28,7 @@ const Music = () => {
       id: 2,
       title: "Soulful Journey",
       year: "2022",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Album+2",
+      cover: demoImages.albums[2],
       tracks: [
         { id: 6, title: "Journey Begins", duration: "3:15", artist: "Artist Name" },
         { id: 7, title: "Soul's Awakening", duration: "4:45", artist: "Artist Name" },
@@ -39,7 +40,7 @@ const Music = () => {
       id: 3,
       title: "Acoustic Sessions",
       year: "2020",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Album+3",
+      cover: demoImages.albums[3],
       tracks: [
         { id: 10, title: "Unplugged Dreams", duration: "3:08", artist: "Artist Name" },
         { id: 11, title: "Raw Emotions", duration: "4:25", artist: "Artist Name" },
@@ -54,7 +55,7 @@ const Music = () => {
       title: "New Beginning",
       duration: "3:55",
       artist: "Artist Name",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Single+1",
+      cover: demoImages.singles[1],
       releaseDate: "2024"
     },
     {
@@ -62,7 +63,7 @@ const Music = () => {
       title: "Summer Vibes",
       duration: "3:22",
       artist: "Artist Name",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Single+2",
+      cover: demoImages.singles[2],
       releaseDate: "2024"
     },
     {
@@ -70,7 +71,7 @@ const Music = () => {
       title: "Winter's Tale",
       duration: "4:08",
       artist: "Artist Name",
-      cover: "https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Single+3",
+      cover: demoImages.singles[3],
       releaseDate: "2023"
     }
   ];

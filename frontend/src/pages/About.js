@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { demoImages } from '../config/demoImages';
 
 const About = () => {
   const timeline = [
@@ -119,7 +120,7 @@ const About = () => {
               style={{ textAlign: 'center' }}
             >
               <img
-                src="https://via.placeholder.com/400x500/2a2a2a/ffffff?text=Artist+Photo"
+                src={demoImages.artist}
                 alt="Artist"
                 style={{
                   width: '100%',

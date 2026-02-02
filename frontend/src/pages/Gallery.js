@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { galleryAPI } from '../services/api';
+import { demoImages } from '../config/demoImages';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -20,57 +21,8 @@ const Gallery = () => {
       setGalleryImages(data);
     } catch (error) {
       console.error('Error fetching gallery images:', error);
-      // Fallback to reliable placeholder images
-      setGalleryImages([
-        {
-          id: 1,
-          src: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=300&fit=crop",
-          title: "Live Performance",
-          category: "performance",
-          description: "Electric performance at Madison Square Garden"
-        },
-        {
-          id: 2,
-          src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop",
-          title: "Studio Session",
-          category: "studio",
-          description: "Recording the latest album"
-        },
-        {
-          id: 3,
-          src: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=300&fit=crop",
-          title: "Behind the Scenes",
-          category: "behind",
-          description: "Making of the music video"
-        },
-        {
-          id: 4,
-          src: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=300&fit=crop",
-          title: "Festival Performance",
-          category: "performance",
-          description: "Summer Music Festival 2024"
-        },
-        {
-          id: 5,
-          src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
-          title: "Acoustic Session",
-          category: "studio",
-          description: "Intimate acoustic recording"
-        },
-        {
-          id: 6,
-          src: "https://images.unsplash.com/photo-1471478653858-1b1b38920218?w=800&h=600&fit=crop",
-          thumbnail: "https://images.unsplash.com/photo-1471478653858-1b1b38920218?w=400&h=300&fit=crop",
-          title: "Tour Life",
-          category: "behind",
-          description: "Life on the road"
-        }
-      ]);
+      // Use demo images as fallback
+      setGalleryImages(demoImages.gallery);
     } finally {
       setLoading(false);
     }

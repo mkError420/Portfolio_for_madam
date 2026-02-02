@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { demoImages } from '../config/demoImages';
 
 const Home = () => {
   return (
@@ -22,7 +23,7 @@ const Home = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'url("https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=Hero+Background") center/cover',
+          background: `url("${demoImages.hero}") center/cover`,
           opacity: 0.3,
           zIndex: 1,
         }} />
@@ -171,10 +172,11 @@ const Home = () => {
           >
             <div>
               <img
-                src="https://via.placeholder.com/400x400/2a2a2a/ffffff?text=Album+Cover"
+                src={demoImages.albums[1]}
                 alt="Latest Album"
                 style={{
                   width: '100%',
+                  maxWidth: '400px',
                   borderRadius: '15px',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
                 }}
